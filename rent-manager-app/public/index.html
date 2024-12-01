@@ -59,7 +59,7 @@
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/app.js"></script>
-  <script>
+  <!-- <script>
     (function (d, m) {
       var kommunicateSettings =
         { "appId": "1923fe465772b674c05031428cc014d28", "popupWidget": true, "automaticChatOpenOnNavigation": true };
@@ -68,7 +68,49 @@
       var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
       window.kommunicate = m; m._globals = kommunicateSettings;
     })(document, window.kommunicate || {});
-  </script>
+  </script> -->
+ <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Bot-Rental"
+  agent-id="15abe215-ddda-4c0b-96cf-0a4a617e818a"
+  language-code="vi"
+></df-messenger>
+
+<style>
+  /* Tùy chỉnh giao diện Dialogflow Messenger */
+  df-messenger {
+    --df-messenger-bot-message: #007bff;
+    --df-messenger-button-titlebar-color: #0056b3;
+    --df-messenger-font-color: #ffffff;
+    --df-messenger-chat-background-color: #f1f1f1;
+    --df-messenger-input-box-color: #ffffff;
+    --df-messenger-send-icon: #007bff;
+    --df-messenger-input-font-color: #000000;
+    --df-messenger-user-message: #4caf50;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    --df-messenger-width: 400px;
+    --df-messenger-height: 300px !important;
+  }
+
+  /* Căn chỉnh hộp nhập văn bản và thêm biểu tượng micro */
+  df-messenger::part(input-wrapper) {
+    display: flex; /* Hiển thị cùng dòng */
+    align-items: center;
+  }
+
+  df-messenger::part(input-wrapper)::after {
+    content: '\1F3A4'; /* Unicode micro 🎤 */
+    font-size: 20px; /* Kích thước biểu tượng */
+    margin-left: 10px; /* Khoảng cách giữa micro và hộp nhập */
+    cursor: pointer; /* Thêm hiệu ứng con trỏ */
+    color: #007bff; /* Màu của biểu tượng micro */
+  }
+</style>
+
 </body>
 
 </html>

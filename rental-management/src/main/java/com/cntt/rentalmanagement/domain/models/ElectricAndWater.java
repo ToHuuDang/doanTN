@@ -8,19 +8,23 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "electric")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Electric {
+public class ElectricAndWater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private int month;
-    private int lastMonthBlock;
-    private int thisMonthBlock;
-    private BigDecimal moneyEachBlock;
-    private BigDecimal totalMoney;
+    private int lastMonthNumberOfElectric;
+    private int thisMonthNumberOfElectric;
+    private int lastMonthBlockOfWater;
+    private int thisMonthBlockOfWater;
+    private BigDecimal moneyEachNumberOfElectric;
+    private BigDecimal moneyEachBlockOfWater;
+    private BigDecimal totalMoneyOfElectric;
+    private BigDecimal totalMoneyOfWater;
     private boolean paid;
 
     @ManyToOne

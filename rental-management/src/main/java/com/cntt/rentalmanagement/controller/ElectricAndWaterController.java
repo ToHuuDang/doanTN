@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/electric")
-public class ElectricController {
+@RequestMapping("/electric-water")
+public class ElectricAndWaterController {
     @Autowired
     private ElectricAndWaterService electricAndWaterService;
 

@@ -28,7 +28,7 @@ class Home extends Component {
     // Hàm gọi API lấy danh sách phòng trọ
     fetchRooms = () => {
         //console.log(pageNo)
-        getAllRoomOfCustomer(1, 3, '', '','').then(response => {
+        getAllRoomOfCustomer(1, 3, '', '', '').then(response => {
             this.setState({
                 rooms: response.content
             });
@@ -152,10 +152,10 @@ class Home extends Component {
                                         <div className="card-box-a card-shadow">
                                             <div className="img-box-a">
                                                 {room.roomMedia[0] ?
-                                                    <img src={room.roomMedia[0].files} alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
-                                                    :
-                                                    <img src="assets/img/property-1.jpg" alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
-                                                }
+                                                        <img src={"http://localhost:8080/document/"+room.roomMedia[0].files} alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
+                                                        :
+                                                        <img src="assets/img/property-1.jpg" alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
+                                                    }
                                             </div>
                                             <div className="card-overlay">
                                                 <div className="card-overlay-a-content">
@@ -305,7 +305,7 @@ class Home extends Component {
                 </section>
 
 
-                <section className="section-testimonials section-t8 nav-arrow-a">
+                {/* <section className="section-testimonials section-t8 nav-arrow-a">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-12">
@@ -419,7 +419,7 @@ class Home extends Component {
                         <div className="testimonial-carousel-pagination carousel-pagination"></div>
 
                     </div>
-                </section>
+                </section> */}
             </main>
         )
     }

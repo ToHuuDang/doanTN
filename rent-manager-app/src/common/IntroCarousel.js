@@ -22,7 +22,7 @@ class IntroCarosel extends Component {
                         navigation={true}
                         modules={[Autoplay, Pagination, Navigation]} className="swiper-wrapper">
                         <SwiperSlide className="carousel-item-b swiper-slide" >
-                            <div className="swiper-slide carousel-item-a intro-item bg-image" style={{ backgroundImage: `url(assets/img/slide-1.jpg)` }}>
+                            <div className="swiper-slide carousel-item-a intro-item bg-image" style={{ backgroundImage: `url(assets/img/property-8.jpg)` }}>
                                 <div className="overlay overlay-a"></div>
                                 <div className="intro-content display-table">
                                     <div className="table-cell">
@@ -30,12 +30,12 @@ class IntroCarosel extends Component {
                                             <div className="row">
                                                 <div className="col-lg-8">
                                                     <div className="intro-body">
-                                                        <p className="intro-title-top">Phòng trọ tốt bạn muốn tìm kiếm
-                                                            <br /> 2024
+                                                        <p className="intro-title-top">Nơi xây dựng tổ ấm của bạn
+                                                            <br /> 
                                                         </p>
                                                         <h1 className="intro-title mb-4 ">
-                                                            <span className="color-b">Hà Nội </span> Một
-                                                            <br /> Nơi tuyệt vời
+                                                            <span className="color-b">Phòng trọ </span> giá tốt tại
+                                                            <br /> Đà Nẵng
                                                         </h1>
                                                         <p className="intro-subtitle intro-price">
                                                             <a href="/rental-home"><span className="price-a">Ngay đây!</span></a>
@@ -49,7 +49,7 @@ class IntroCarosel extends Component {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide className="carousel-item-b swiper-slide" >
-                            <div className="swiper-slide carousel-item-a intro-item bg-image" style={{ backgroundImage: `url(assets/img/slide-2.jpg)` }}>
+                            <div className="swiper-slide carousel-item-a intro-item bg-image" style={{ backgroundImage: `url(assets/img/post-4.jpg)` }}>
                                 <div className="overlay overlay-a"></div>
                                 <div className="intro-content display-table">
                                     <div className="table-cell">
@@ -61,7 +61,7 @@ class IntroCarosel extends Component {
                                                             <br /> Goodjob!
                                                         </p>
                                                         <h1 className="intro-title mb-4">
-                                                            <span className="color-b">2000 </span> Phòng trọ
+                                                            <span className="color-b">Hơn 1 Bilion </span> Phòng trọ
                                                             <br /> Đã được thuê
                                                         </h1>
                                                         <p className="intro-subtitle intro-price">

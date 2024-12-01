@@ -1,14 +1,13 @@
 package com.cntt.rentalmanagement.services;
 
-import com.cntt.rentalmanagement.domain.models.Electric;
-import com.cntt.rentalmanagement.domain.models.Room;
-import com.cntt.rentalmanagement.domain.payload.response.ElectricResponse;
+import com.cntt.rentalmanagement.domain.models.ElectricAndWater;
+import com.cntt.rentalmanagement.domain.payload.response.ElectricAndWaterResponse;
 
 import java.util.List;
 
-public interface ElectricService {
-    public Electric saveElectric(Electric electric);
-    public Electric updateElectric(Electric electric, Long id);
-    public List<ElectricResponse> getElectricByRoom(Long id);
-    public ElectricResponse getElectric(Long id);
+public interface ElectricAndWaterService {
+    public ElectricAndWater saveElectric(ElectricAndWater electricAndWater);
+    public ElectricAndWater updateElectric(ElectricAndWater electricAndWater, Long id);
+    public List<ElectricAndWaterResponse> getElectricByRoom(Long id);
+    public ElectricAndWaterResponse getElectricAndWater(Long id);
 }

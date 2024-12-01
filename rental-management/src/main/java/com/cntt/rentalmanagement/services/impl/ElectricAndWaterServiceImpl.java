@@ -1,81 +1,122 @@
 package com.cntt.rentalmanagement.services.impl;
 
-import com.cntt.rentalmanagement.domain.models.Electric;
-import com.cntt.rentalmanagement.domain.payload.response.ElectricResponse;
-import com.cntt.rentalmanagement.repository.ElectricRepository;
-import com.cntt.rentalmanagement.services.ElectricService;
+import com.cntt.rentalmanagement.domain.models.ElectricAndWater;
+import com.cntt.rentalmanagement.domain.models.Room;
+import com.cntt.rentalmanagement.domain.payload.response.ElectricAndWaterResponse;
+import com.cntt.rentalmanagement.repository.ElectricAndWaterRepository;
+import com.cntt.rentalmanagement.services.ElectricAndWaterService;
 import com.cntt.rentalmanagement.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class ElectricServiceImpl implements ElectricService {
+public class ElectricAndWaterServiceImpl implements ElectricAndWaterService {
     @Autowired
-    private ElectricRepository electricRepository;
+    private ElectricAndWaterRepository electricAndWaterRepository;
     @Autowired
     private RoomService roomService;
 
     @Override
-    public Electric saveElectric(Electric electric) {
-        electric.setPaid(false);
-        int deviatedBlock = electric.getThisMonthBlock() - electric.getLastMonthBlock();
-        BigDecimal totalMoney = deviatedBlock > 0 ? electric.getMoneyEachBlock().multiply(BigDecimal.valueOf(deviatedBlock)) : BigDecimal.ZERO;
-        electric.setTotalMoney(totalMoney);
-        return electricRepository.save(electric);
+    @Transactional
+    public ElectricAndWater saveElectric(ElectricAndWater electricAndWater) {
+        electricAndWater.setPaid(false);
+        int deviatedBlock = electricAndWater.getThisMonthBlockOfWater() - electricAndWater.getLastMonthBlockOfWater();
+        int deviatedNumber = electricAndWater.getThisMonthNumberOfElectric() - electricAndWater.getLastMonthNumberOfElectric();
+        BigDecimal totalMoneyOfWater = deviatedBlock > 0 ? electricAndWater.getMoneyEachBlockOfWater().multiply(BigDecimal.valueOf(deviatedBlock)) : BigDecimal.ZERO;
+        BigDecimal totalMoneyOfElectric = deviatedNumber > 0 ? electricAndWater.getMoneyEachNumberOfElectric().multiply(BigDecimal.valueOf(deviatedNumber)) : BigDecimal.ZERO;
+        electricAndWater.setTotalMoneyOfWater(totalMoneyOfWater);
+        electricAndWater.setTotalMoneyOfElectric(totalMoneyOfElectric);
+
+        Room room = electricAndWater.getRoom();
+        room.setPublicElectricCost(totalMoneyOfElectric);
+        room.setWaterCost(totalMoneyOfWater);
+        roomService.updateRoom(room, room.getId());
+        return electricAndWaterRepository.save(electricAndWater);
     }
 
     @Override
-    public Electric updateElectric(Electric electric, Long id) {
-        return electricRepository.findById(id)
-            .map(electric1 -> {
-                int deviatedBlock = electric.getThisMonthBlock() - electric.getLastMonthBlock();
-                BigDecimal totalMoney = deviatedBlock > 0 ? electric.getMoneyEachBlock().multiply(BigDecimal.valueOf(deviatedBlock)) : BigDecimal.ZERO;
+    @Transactional
+    public ElectricAndWater updateElectric(ElectricAndWater electricAndWater, Long id) {
+        return electricAndWaterRepository.findById(id)
+            .map(electricAndWater1 -> {
+                int deviatedBlock = electricAndWater.getThisMonthBlockOfWater() - electricAndWater.getLastMonthBlockOfWater();
+                int deviatedNumber = electricAndWater.getThisMonthNumberOfElectric() - electricAndWater.getLastMonthNumberOfElectric();
+                BigDecimal totalMoneyOfWater = deviatedBlock > 0 ? electricAndWater.getMoneyEachBlockOfWater().multiply(BigDecimal.valueOf(deviatedBlock)) : BigDecimal.ZERO;
+                BigDecimal totalMoneyOfElectric = deviatedNumber > 0 ? electricAndWater.getMoneyEachNumberOfElectric().multiply(BigDecimal.valueOf(deviatedNumber)) : BigDecimal.ZERO;
 
-                electric1.setRoom(electric.getRoom());
-                electric1.setMonth(electric.getMonth());
-                electric1.setLastMonthBlock(electric.getLastMonthBlock());
-                electric1.setThisMonthBlock(electric.getThisMonthBlock());
-                electric1.setMoneyEachBlock(electric.getMoneyEachBlock());
-                electric1.setTotalMoney(totalMoney);
-                electric1.setPaid(electric.isPaid());
-                return electricRepository.save(electric1);
+                electricAndWater1.setRoom(electricAndWater.getRoom());
+                electricAndWater1.setMonth(electricAndWater.getMonth());
+                electricAndWater1.setName(electricAndWater.getName());
+
+                electricAndWater1.setLastMonthBlockOfWater(electricAndWater.getLastMonthBlockOfWater());
+                electricAndWater1.setThisMonthBlockOfWater(electricAndWater.getThisMonthBlockOfWater());
+                electricAndWater1.setMoneyEachBlockOfWater(electricAndWater.getMoneyEachBlockOfWater());
+                electricAndWater1.setTotalMoneyOfWater(totalMoneyOfWater);
+
+                electricAndWater1.setLastMonthNumberOfElectric(electricAndWater.getLastMonthNumberOfElectric());
+                electricAndWater1.setThisMonthNumberOfElectric(electricAndWater.getThisMonthNumberOfElectric());
+                electricAndWater1.setMoneyEachNumberOfElectric(electricAndWater.getMoneyEachNumberOfElectric());
+                electricAndWater1.setTotalMoneyOfElectric(totalMoneyOfElectric);
+                electricAndWater1.setPaid(electricAndWater.isPaid());
+
+                Room room = electricAndWater.getRoom();
+                room.setPublicElectricCost(totalMoneyOfElectric);
+                room.setWaterCost(totalMoneyOfWater);
+                roomService.updateRoom(room, room.getId());
+                return electricAndWaterRepository.save(electricAndWater1);
             })
             .orElseThrow(() -> new RuntimeException("Electric not found with id " + id));
     }
 
     @Override
-    public List<ElectricResponse> getElectricByRoom(Long id) {
-        return electricRepository.findByRoomId(id).stream().map(electric -> {
-            ElectricResponse electricResponse = new ElectricResponse();
-            electricResponse.setId(electric.getId());
-            electricResponse.setMonth(electric.getMonth());
-            electricResponse.setLastMonthBlock(electric.getLastMonthBlock());
-            electricResponse.setThisMonthBlock(electric.getThisMonthBlock());
-            electricResponse.setMoneyEachBlock(electric.getMoneyEachBlock());
-            electricResponse.setTotalMoney(electric.getTotalMoney());
-            electricResponse.setRoom(roomService.getRoomById(electric.getRoom().getId()));
-            electricResponse.setPaid(electric.isPaid());
-            return electricResponse;
+    public List<ElectricAndWaterResponse> getElectricByRoom(Long id) {
+        return electricAndWaterRepository.findByRoomId(id).stream().map(electricAndWater -> {
+            ElectricAndWaterResponse electricAndWaterResponse = new ElectricAndWaterResponse();
+            electricAndWaterResponse.setId(electricAndWater.getId());
+            electricAndWaterResponse.setName(electricAndWater.getName());
+            electricAndWaterResponse.setMonth(electricAndWater.getMonth());
+            electricAndWaterResponse.setLastMonthBlockOfWater(electricAndWater.getLastMonthBlockOfWater());
+            electricAndWaterResponse.setThisMonthBlockOfWater(electricAndWater.getThisMonthBlockOfWater());
+            electricAndWaterResponse.setMoneyEachBlockOfWater(electricAndWater.getMoneyEachBlockOfWater());
+            electricAndWaterResponse.setTotalMoneyOfWater(electricAndWater.getTotalMoneyOfWater());
+
+            electricAndWaterResponse.setLastMonthNumberOfElectric(electricAndWater.getLastMonthNumberOfElectric());
+            electricAndWaterResponse.setThisMonthNumberOfElectric(electricAndWater.getThisMonthNumberOfElectric());
+            electricAndWaterResponse.setMoneyEachNumberOfElectric(electricAndWater.getMoneyEachNumberOfElectric());
+            electricAndWaterResponse.setTotalMoneyOfElectric(electricAndWater.getTotalMoneyOfElectric());
+
+            electricAndWaterResponse.setRoom(roomService.getRoomById(electricAndWater.getRoom().getId()));
+            electricAndWaterResponse.setPaid(electricAndWater.isPaid());
+
+            return electricAndWaterResponse;
         }).toList();
     }
 
     @Override
-    public ElectricResponse getElectric(Long id) {
-        return electricRepository.findById(id)
-            .map(electric -> {
-                ElectricResponse electricResponse = new ElectricResponse();
-                electricResponse.setId(electric.getId());
-                electricResponse.setMonth(electric.getMonth());
-                electricResponse.setLastMonthBlock(electric.getLastMonthBlock());
-                electricResponse.setThisMonthBlock(electric.getThisMonthBlock());
-                electricResponse.setMoneyEachBlock(electric.getMoneyEachBlock());
-                electricResponse.setTotalMoney(electric.getTotalMoney());
-                electricResponse.setRoom(roomService.getRoomById(electric.getRoom().getId()));
-                electricResponse.setPaid(electric.isPaid());
-                return electricResponse;
+    public ElectricAndWaterResponse getElectricAndWater(Long id) {
+        return electricAndWaterRepository.findById(id)
+            .map(electricAndWater -> {
+                ElectricAndWaterResponse electricAndWaterResponse = new ElectricAndWaterResponse();
+                electricAndWaterResponse.setId(electricAndWater.getId());
+                electricAndWaterResponse.setName(electricAndWater.getName());
+                electricAndWaterResponse.setMonth(electricAndWater.getMonth());
+                electricAndWaterResponse.setLastMonthBlockOfWater(electricAndWater.getLastMonthBlockOfWater());
+                electricAndWaterResponse.setThisMonthBlockOfWater(electricAndWater.getThisMonthBlockOfWater());
+                electricAndWaterResponse.setMoneyEachBlockOfWater(electricAndWater.getMoneyEachBlockOfWater());
+                electricAndWaterResponse.setTotalMoneyOfWater(electricAndWater.getTotalMoneyOfWater());
+
+                electricAndWaterResponse.setLastMonthNumberOfElectric(electricAndWater.getLastMonthNumberOfElectric());
+                electricAndWaterResponse.setThisMonthNumberOfElectric(electricAndWater.getThisMonthNumberOfElectric());
+                electricAndWaterResponse.setMoneyEachNumberOfElectric(electricAndWater.getMoneyEachNumberOfElectric());
+                electricAndWaterResponse.setTotalMoneyOfElectric(electricAndWater.getTotalMoneyOfElectric());
+
+                electricAndWaterResponse.setRoom(roomService.getRoomById(electricAndWater.getRoom().getId()));
+                electricAndWaterResponse.setPaid(electricAndWater.isPaid());
+                return electricAndWaterResponse;
             })
             .orElseThrow(() -> new RuntimeException("Electric not found with id " + id));
     }
