@@ -9,6 +9,7 @@
         "@mui/styled-engine": "^5.13.2",
         "@mui/styled-engine-sc": "^5.12.0",
         "@react-google-maps/api": "^2.19.2",
+        "@shadcn/ui": "^0.0.4",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
@@ -16,8 +17,12 @@
         "axios": "^1.4.0",
         "bootstrap": "^5.0.1",
         "chart.js": "^4.3.3",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
         "firebase": "^10.1.0",
+        "framer-motion": "^11.14.4",
         "jwt-decode": "^3.1.2",
+        "lucide-react": "^0.468.0",
         "moment": "^2.29.4",
         "net": "^1.0.2",
         "react": "^18.2.0",
@@ -39,8 +44,11 @@
         "stompjs": "^2.3.3",
         "styled-components": "^5.3.11",
         "swiper": "^10.0.4",
+        "tailwind-merge": "^2.5.5",
+        "tailwindcss-animate": "^1.0.7",
         "web-vitals": "^2.1.4",
-        "xlsx": "^0.18.5"
+        "xlsx": "^0.18.5",
+        "tailwindcss": "^3.4.16"
     },
     "scripts": {
         "start": "react-scripts start",

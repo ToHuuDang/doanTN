@@ -1,3 +1,4 @@
+import "./index.css"
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from "./page/user/Main";
@@ -57,6 +58,7 @@ import ChatOfUser from './page/user/ChatOfUser';
 import ElectricAndWaterManagement from './page/rentaler/ElectricAndWaterManagement';
 import AddElectricAndWater from './page/rentaler/AddElectricAndWater';
 import EditElectricAndWater from './page/rentaler/EditElectricAndWater';
+import { ChatWidget } from './common/ChatWidget';
 
 
 
@@ -194,8 +196,7 @@ function App() {
           <Route path="*" exact={true} component={NotFound} />
         </Routes>
       </Router>
-
-
+      <ChatWidget/>
       <ToastContainer
         position="top-right"
         autoClose={5000}
