@@ -47,7 +47,7 @@ function Login(props) {
                             <div className="row justify-content-center">
                                 <div className="col-md-8">
                                     <div className="mb-4">
-                                        <h3>Đăng nhập <a href="/" style={{ textDecoration: 'none' }}>Estate<span className="color-b">Agency</span></a></h3>
+                                        <h3>Đăng nhập <a href="/" style={{ textDecoration: 'none' }}>PhongTro<span className="color-b">SinhVien</span></a></h3>
                                         <p className="mb-4">Nếu bạn chưa có tài khoản. <a href="/signup">Đăng ký tài khoản mới</a></p>
                                     </div>
                                     <LoginForm />
@@ -70,10 +70,10 @@ function Login(props) {
 function SocialLogin() {
     return (
         <div className="social-login">
-            <a href={FACEBOOK_AUTH_URL} className="facebook">
+            {/* <a href={FACEBOOK_AUTH_URL} className="facebook">
                 <span className="icon-facebook mr-3">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" /></svg>                                                    </span>
-            </a>
+            </a> */}
             &nbsp;&nbsp;
             <a href={GOOGLE_AUTH_URL} className="google">
                 <span className="icon-google mr-3">

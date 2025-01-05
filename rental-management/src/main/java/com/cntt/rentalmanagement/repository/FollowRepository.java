@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> , FollowRepositoryCustom{
     Optional<Follow> findByCustomerAndRentaler(User customer, User rentaler);
+    void deleteByCustomerId(Long customerId);  // Xóa theo customerId
 
+    void deleteByRentalerId(Long rentalerId);  // Xóa theo rentalerId
 }

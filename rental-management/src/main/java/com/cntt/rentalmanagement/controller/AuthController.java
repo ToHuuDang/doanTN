@@ -3,6 +3,7 @@ package com.cntt.rentalmanagement.controller;
 import com.cntt.rentalmanagement.domain.payload.request.*;
 import com.cntt.rentalmanagement.domain.payload.response.ApiResponse;
 import com.cntt.rentalmanagement.domain.payload.response.AuthResponse;
+import com.cntt.rentalmanagement.domain.payload.response.MessageResponse;
 import com.cntt.rentalmanagement.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -69,5 +70,12 @@ public class AuthController {
     @PostMapping("/{id}/locked")
     private ResponseEntity<?> lockedAccount(@PathVariable Long id) {
         return ResponseEntity.ok(authService.lockAccount(id));
+    }
+
+    // Xoá user phía Admin
+    @DeleteMapping("/{id}/deleteUser") // Cập nhật: Thêm phương thức xóa user
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        MessageResponse response = authService.deleteUser(id);
+        return ResponseEntity.ok(response);
     }
 }

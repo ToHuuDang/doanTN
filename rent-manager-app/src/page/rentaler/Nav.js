@@ -22,7 +22,7 @@ const Nav = (props) => {
             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
               <div className="dropdown-menu-header">
                 <div className="position-relative">
-                  4 tin nhắn mới
+                  Có tin nhắn mới
                 </div>
               </div>
               <div className="dropdown-menu-footer">

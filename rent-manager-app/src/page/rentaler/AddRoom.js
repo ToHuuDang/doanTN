@@ -186,12 +186,15 @@ function AddRoom(props) {
                                             <select className="form-select" id="locationId" name="locationId" value={roomData.locationId} onChange={handleInputChange}>
                                                 <option value={0}>Chọn...</option>
                                                 <option value={1}>Hà Nội</option>
+                                                <option value={2}>Đà Nẵng</option>
+                                                <option value={3}>TP Hồ Chí Minh</option>
+                                                <option value={4}>Cần Thơ</option>
                                             </select>
                                         </div>
                                         <div className="mb-3 col-md-6">
                                             <label className="form-label" htmlFor="address">Địa Chỉ</label>
-                                            {/* <input type="text" className="form-control" id="address" name="address" value={roomData.address} onChange={handleInputChange} /> */}
-                                            <PlacesWithStandaloneSearchBox latLong={setLatLong} />
+                                            <input type="text" className="form-control" id="address" name="address" value={roomData.address} onChange={handleInputChange} />
+                                            {/* <PlacesWithStandaloneSearchBox latLong={setLatLong} /> */}
                                         </div>
 
 

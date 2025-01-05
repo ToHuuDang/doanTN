@@ -13,4 +13,5 @@ public class SendEmailRequest {
     private String title;
     private String nameOfRentaler;
     private String description;
+    private String senderEmail; 
 }

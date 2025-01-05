@@ -97,7 +97,8 @@ public class AccountServiceImpl implements AccountService {
     public void sendEmailFromTemplate(SendEmailRequest sendEmailRequest) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
 
-        message.setFrom(new InternetAddress("trungdang82678@gmail.com"));
+        // message.setFrom(new InternetAddress("trungdang82678@gmail.com"));
+        message.setFrom(new InternetAddress(sendEmailRequest.getSenderEmail()));  // Email người gửi
         message.setRecipients(MimeMessage.RecipientType.TO, sendEmailRequest.getToEmail());
         message.setSubject(sendEmailRequest.getTitle());
 

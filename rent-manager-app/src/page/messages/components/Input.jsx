@@ -135,7 +135,7 @@ const Input = () => {
               value={text}
               style={{width : "300px"}}
             />
-            <button className="btn btn-primary"  onClick={handleSend}>Send</button>
+            <button className="btn btn-primary"  onClick={handleSend}>Gửi</button>
           </div>
         </div>
      

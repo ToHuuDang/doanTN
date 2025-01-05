@@ -7,8 +7,13 @@ import com.cntt.rentalmanagement.domain.models.User;
 import com.cntt.rentalmanagement.domain.payload.request.*;
 import com.cntt.rentalmanagement.domain.payload.response.MessageResponse;
 import com.cntt.rentalmanagement.exception.BadRequestException;
+import com.cntt.rentalmanagement.repository.BlogStoreRepository;
+import com.cntt.rentalmanagement.repository.CommentRepository;
+import com.cntt.rentalmanagement.repository.FollowRepository;
+import com.cntt.rentalmanagement.repository.MessageRepository;
 import com.cntt.rentalmanagement.repository.RoleRepository;
 import com.cntt.rentalmanagement.repository.UserRepository;
+import com.cntt.rentalmanagement.repository.UserRepositoryCustom;
 import com.cntt.rentalmanagement.secruity.TokenProvider;
 import com.cntt.rentalmanagement.services.AuthService;
 import com.cntt.rentalmanagement.services.BaseService;
@@ -31,6 +36,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -63,6 +70,17 @@ public class AuthServiceImpl extends BaseService implements AuthService {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private BlogStoreRepository blogStoreRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private FollowRepository followRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     @Override
     public URI registerAccount(SignUpRequest signUpRequest) throws MessagingException, IOException {
@@ -196,6 +214,28 @@ public class AuthServiceImpl extends BaseService implements AuthService {
         userRepository.save(user);
         return MessageResponse.builder().message("Cập nhật trạng thái của tài khoản thành công").build();
     }
+
+    // Xoá user phía Admin
+    @Transactional
+    @Override
+    public MessageResponse deleteUser(Long id) { // Cập nhật: Thêm phương thức xóa user
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Xóa vai trò của user (nếu có)
+        userRepository.deleteRoleOfAccount(id);
+        blogStoreRepository.deleteByUserId(id);
+        commentRepository.deleteByuser_Id(id);
+        followRepository.deleteByCustomerId(id); // Xóa các follow liên quan đến user (nếu có)
+        followRepository.deleteByRentalerId(id); // Xóa các follow liên quan đến user (nếu có)
+        messageRepository.deleteBySenderId(id);
+        messageRepository.deleteByReceiverId(id);
+
+        // Xóa user
+        userRepository.delete(user);
+
+        return MessageResponse.builder().message("Xóa tài khoản thành công").build();
+    }
+
 
     @Override
     public MessageResponse uploadProfile(MultipartFile file, String zalo, String facebook, String address) {

@@ -22,7 +22,8 @@ public interface RoomService {
 
     Room getRoom(Long id);
 
-    MessageResponse disableRoom(Long id);
+    MessageResponse disableRoom(Long id);// An phong
+    MessageResponse enableRoom(Long id); // Hien thi phong
 
     MessageResponse updateRoomInfo(Long id, RoomRequest roomRequest);
 
@@ -32,6 +33,8 @@ public interface RoomService {
     MessageResponse isApproveRoom(Long id);
 
     MessageResponse removeRoom(Long id);
+
+    MessageResponse deleteRoom(Long id); // xoá phòng admin
 
 	String addComment(Long id, CommentDTO commentDTO);
 

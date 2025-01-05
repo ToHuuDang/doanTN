@@ -5,7 +5,7 @@ const SidebarNav = () => {
   return (
     <ul className="sidebar-nav">
       <li className="sidebar-header">
-        Quản lí chức năng
+      <span style={{ fontSize: "20px" }}>Các chức năng</span>
       </li>
       <li className="sidebar-item">
         <NavLink to="/profile" className="sidebar-link">

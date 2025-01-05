@@ -4,7 +4,7 @@ import Nav from './Nav';
 import Pagination from './Pagnation';
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { approveRoomOfAdmin, disableRoom, getAllRoomOfAdmin, removeRoomOfAdmin } from '../../services/fetch/ApiUtils';
+import { approveRoomOfAdmin, disableRoom, getAllRoomOfAdmin, removeRoomOfAdmin, deleteRoomOfAdmin } from '../../services/fetch/ApiUtils';
 import ModalRoomDetails from './modal/ModalRoomDetail';
 
 function RoomManagement(props) {
@@ -70,6 +70,17 @@ function RoomManagement(props) {
         )
     }
 
+    const handleDeleteRoom = (id) => {
+        deleteRoomOfAdmin(id)
+            .then(response => {
+                toast.success(response.message);
+                fetchData(); // Tải lại danh sách phòng sau khi xóa thành công
+            })
+            .catch(error => {
+                toast.error((error && error.message) || 'Có lỗi xảy ra khi xóa phòng!');
+            });
+    };
+
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -124,7 +135,10 @@ function RoomManagement(props) {
                                             <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "142px" }} >Trạng Thái</th>
                                             <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "110px" }} >Phê duyệt</th>
                                             <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "134px" }} >Gỡ tin</th>
-                                            <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "54px" }} ></th></tr>
+                                            <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "54px" }} ></th>
+                                            
+                                            <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "54px" }} >Xóa</th>
+                                            </tr>
                                     </thead>
                                     <tbody>
                                         {tableData.map((item) => (
@@ -147,6 +161,15 @@ function RoomManagement(props) {
                                                         {item.isRemove === false ? "Gỡ" : "Đã gỡ"}
                                                     </button>
                                                 </td>
+                                                <td>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-outline-danger"
+                                                                onClick={() => handleDeleteRoom(item.id)}  // Gọi hàm xóa
+                                                            >
+                                                                Xóa
+                                                            </button>
+                                                        </td>
                                                 <td>
                                                     <a href="#" onClick={() => handleSendEmail(item.user.id)} data-toggle="tooltip" data-placement="bottom" title="Gửi email"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z" /></svg></a>
 

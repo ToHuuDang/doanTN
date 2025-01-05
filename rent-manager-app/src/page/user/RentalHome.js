@@ -129,8 +129,9 @@ const RentalHome = (props) => {
                                                 <div className="card-header-a">
                                                     <h2 className="card-title-a">
                                                         <Link to={`/rental-home/${room.id}`}>
-                                                            <b>{room.title}</b>
-                                                            <br /> <small>{room.description}</small>
+                                                                <b>{room.title}</b>
+                                                                <br />
+                                                                <small>{room.description.slice(0, 50)}...</small> {/* Cắt chuỗi và hiển thị dấu "..." nếu dài hơn 100 ký tự */}
                                                         </Link>
 
                                                     </h2>

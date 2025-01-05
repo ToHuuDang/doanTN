@@ -7,7 +7,7 @@ export function ChatWidget() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Ok! Tomorrow morning. Can I tell you something else?",
+      text: "Chào bạn, Tôi là nhân viên tư vấn phòng trọ, bạn có câu hỏi gì?",
       sender: "bot",
       viewed: true,
       timestamp: new Date()

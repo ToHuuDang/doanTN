@@ -8,4 +8,5 @@ public interface UserRepositoryCustom {
     Page<User> searchingAccount(String keyword, Pageable pageable);
 
     void deleteRoleOfAccount(Long id);
+    
 }

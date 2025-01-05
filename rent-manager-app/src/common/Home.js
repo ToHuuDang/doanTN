@@ -55,80 +55,7 @@ class Home extends Component {
 
         return (
             <main id="main">
-                <section className="section-services section-t8">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="title-wrap d-flex justify-content-between">
-                                    <div className="title-box">
-                                        <h2 className="title-a">Dịch vụ của chúng tôi</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-4">
-                                <div className="card-box-c foo">
-                                    <div className="card-header-c d-flex">
-                                        <div className="card-box-ico">
-                                            <span className="bi bi-cart"></span>
-                                        </div>
-                                        <div className="card-title-c align-self-center">
-                                            <h2 className="title-c">An Toàn</h2>
-                                        </div>
-                                    </div>
-                                    <div className="card-body-c">
-                                        <p className="content-c">
-                                            Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent sapien massa,
-                                            convallis a pellentesque
-                                            nec, egestas non nisi.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="card-box-c foo">
-                                    <div className="card-header-c d-flex">
-                                        <div className="card-box-ico">
-                                            <span className="bi bi-calendar4-week"></span>
-                                        </div>
-                                        <div className="card-title-c align-self-center">
-                                            <h2 className="title-c">0% Lãi</h2>
-                                        </div>
-                                    </div>
-                                    <div className="card-body-c">
-                                        <p className="content-c">
-                                            Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent sapien massa,
-                                            convallis a pellentesque
-                                            nec, egestas non nisi.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="card-box-c foo">
-                                    <div className="card-header-c d-flex">
-                                        <div className="card-box-ico">
-                                            <span className="bi bi-card-checklist"></span>
-                                        </div>
-                                        <div className="card-title-c align-self-center">
-                                            <h2 className="title-c">Nhanh</h2>
-                                        </div>
-                                    </div>
-                                    <div className="card-body-c">
-                                        <p className="content-c">
-                                            Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent sapien massa,
-                                            convallis a pellentesque
-                                            nec, egestas non nisi.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-
+               
                 <section className="section-property section-t8">
                     <div className="container">
                         <div className="row">
@@ -159,13 +86,22 @@ class Home extends Component {
                                             </div>
                                             <div className="card-overlay">
                                                 <div className="card-overlay-a-content">
-                                                    <div className="card-header-a">
+                                                    {/* <div className="card-header-a">
                                                         <h2 className="card-title-a">
                                                             <Link to={`/rental-home/${room.id}`}>
                                                                 <b>{room.title}</b>
                                                                 <br /> <small>{room.description}</small>
                                                             </Link>
 
+                                                        </h2>
+                                                    </div> */}
+                                                    <div className="card-header-a">
+                                                        <h2 className="card-title-a">
+                                                            <Link to={`/rental-home/${room.id}`}>
+                                                                <b>{room.title}</b>
+                                                                <br />
+                                                                <small>{room.description.slice(0, 50)}...</small> {/* Cắt chuỗi và hiển thị dấu "..." nếu dài hơn 100 ký tự */}
+                                                            </Link>
                                                         </h2>
                                                     </div>
                                                     <div className="card-body-a">
@@ -185,7 +121,7 @@ class Home extends Component {
                                                                 })}`}
                                                             </span>
                                                         </div>
-                                                        <Link to={`/rental-home/${room.id}`}>Xem chi tiết
+                                                        <Link to={`/rental-home/${room.id}`} style={{ color: "white" }} >Xem chi tiết
                                                             <span className="bi bi-chevron-right"></span>
                                                         </Link>
                                                     </div>
@@ -303,123 +239,6 @@ class Home extends Component {
                         </div>
                     </div>
                 </section>
-
-
-                {/* <section className="section-testimonials section-t8 nav-arrow-a">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="title-wrap d-flex justify-content-between">
-                                    <div className="title-box">
-                                        <h2 className="title-a">Đánh giá về chúng tôi</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="testimonial-carousel" className="swiper">
-                            <Swiper spaceBetween={30}
-                                centeredSlides={true}
-                                autoplay={{
-                                    delay: 5000,
-                                    disableOnInteraction: false,
-                                }}
-                                pagination={{
-                                    clickable: true,
-                                }}
-                                navigation={true}
-                                modules={[Autoplay, Pagination, Navigation]} className="swiper-wrapper">
-                                <SwiperSlide className="carousel-item-b swiper-slide" >
-
-                                    <div className="carousel-item-a swiper-slide">
-                                        <div className="testimonials-box">
-                                            <div className="row">
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-img">
-                                                        <img src="../assets/img/agent-6.jpg" alt="" className="img-fluid" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-ico">
-                                                        <i className="bi bi-chat-quote-fill"></i>
-                                                    </div>
-                                                    <div className="testimonials-content">
-                                                        <p className="testimonial-text">
-                                                            Các phòng trọ rất tuyệt vời sạch sẽ thoáng mát
-                                                        </p>
-                                                    </div>
-                                                    <div className="testimonial-author-box">
-                                                        <img src="../assets/img/agent-6.jpg" alt="" className="testimonial-avatar" />
-                                                        <h5 className="testimonial-author">Lê Kiên</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide className="carousel-item-b swiper-slide" >
-                                    <div className="carousel-item-a swiper-slide">
-                                        <div className="testimonials-box">
-                                            <div className="row">
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-img">
-                                                        <img src="../assets/img/agent-7.jpg" alt="" className="img-fluid" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-ico">
-                                                        <i className="bi bi-chat-quote-fill"></i>
-                                                    </div>
-                                                    <div className="testimonials-content">
-                                                        <p className="testimonial-text">
-                                                            Không có lời nào diễn tả được cảm xúc của tôi lúc này
-                                                        </p>
-                                                    </div>
-                                                    <div className="testimonial-author-box">
-                                                        <img src="../assets/img/agent-7.jpg" alt="" className="testimonial-avatar" />
-                                                        <h5 className="testimonial-author">Trần Hiển</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="carousel-item-b swiper-slide" >
-                                    <div className="carousel-item-a swiper-slide">
-                                        <div className="testimonials-box">
-                                            <div className="row">
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-img">
-                                                        <img src="../assets/img/agent-5.jpg" alt="" className="img-fluid" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-12 col-md-6">
-                                                    <div className="testimonial-ico">
-                                                        <i className="bi bi-chat-quote-fill"></i>
-                                                    </div>
-                                                    <div className="testimonials-content">
-                                                        <p className="testimonial-text">
-                                                            Hạnh phục của tôi là kiếm được một căn trọ
-                                                            sạch sẽ và đẹp đẽ mà lại còn gần trường.
-                                                        </p>
-                                                    </div>
-                                                    <div className="testimonial-author-box">
-                                                        <img src="../assets/img/agent-5.jpg" alt="" className="testimonial-avatar" />
-                                                        <h5 className="testimonial-author">Hà Linh</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                            </Swiper>
-                        </div>
-                        <div className="testimonial-carousel-pagination carousel-pagination"></div>
-
-                    </div>
-                </section> */}
             </main>
         )
     }

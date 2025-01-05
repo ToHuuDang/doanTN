@@ -75,6 +75,11 @@ public class RoomController {
         return ResponseEntity.ok(roomService.disableRoom(id));
     }
 
+    @PostMapping("/{id}/enable") // UPDATED: Thêm endpoint để hiển thị lại phòng
+    public ResponseEntity<?> enableRoom(@PathVariable Long id) {
+        return ResponseEntity.ok(roomService.enableRoom(id)); // Gọi đến phương thức enableRoom
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRoomInfo(@PathVariable Long id, MultipartHttpServletRequest request) {
         return ResponseEntity.ok(roomService.updateRoomInfo(id, putRoomRequest(request)));
@@ -88,6 +93,11 @@ public class RoomController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeRoom(@PathVariable Long id) {
         return ResponseEntity.ok(roomService.removeRoom(id));
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id) {
+        return ResponseEntity.ok(roomService.deleteRoom(id));
     }
 
     @PostMapping("/{id}/approve")

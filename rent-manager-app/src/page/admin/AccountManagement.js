@@ -4,7 +4,7 @@ import Nav from './Nav';
 import Pagination from './Pagnation';
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { disableRoom, getAllAccpuntOfAdmin, lockedAccount } from '../../services/fetch/ApiUtils';
+import { disableRoom, getAllAccpuntOfAdmin, lockedAccount, deleteUser } from '../../services/fetch/ApiUtils';
 
 function AccountManagement(props) {
     const { authenticated, role, currentUser, location, onLogout } = props;
@@ -50,6 +50,17 @@ function AccountManagement(props) {
             }
         )
 
+    };
+
+    const handleDeleteUser = (userId) => {
+        if (window.confirm('Bạn chắc chắn muốn xóa người dùng này?')) {
+            deleteUser(userId).then(response => {
+                toast.success('Người dùng đã được xóa thành công');
+                fetchData(); // Tải lại danh sách sau khi xóa
+            }).catch(error => {
+                toast.error((error && error.message) || 'Oops! Có điều gì đó xảy ra. Vui lòng thử lại!');
+            });
+        }
     };
 
 
@@ -120,6 +131,14 @@ function AccountManagement(props) {
                                                     <button type="button" class="btn btn-success" onClick={() => handleAuthorization(item.id)}>
                                                         Phân quyền
                                                     </button>
+                                                    {/* Thêm nút "Xóa" */}
+                                                        <button 
+                                                            type="button" 
+                                                            className="btn btn-danger" 
+                                                            onClick={() => handleDeleteUser(item.id)}
+                                                        >
+                                                            Xóa
+                                                        </button>
                                                 </td>
                                             </tr>
                                         ))}

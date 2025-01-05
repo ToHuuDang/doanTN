@@ -197,7 +197,7 @@ const ElectricAndWaterManagement = (props) => {
                             <td>
                               <a
                                 href=""
-                                onClick={() => handleEditElectric(item.id)}
+                                onClick={() => handleExportBill(item.id)}
                                 data-toggle="tooltip"
                                 data-placement="bottom"
                                 title="Sửa thông tin tiền điện nước"

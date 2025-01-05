@@ -542,7 +542,7 @@ export function exportBillRequest(nameBill, description, price, nameRoom, nameOf
 }
 
 
-export function disableRoom(id) {
+export function disableRoom(id) { // Ẩn phòng
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
@@ -552,6 +552,43 @@ export function disableRoom(id) {
         method: 'POST'
     });
 }
+
+export function enableRoom(id) { // Hiển thị phòng
+    // Kiểm tra nếu không có token xác thực
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if (!accessToken) {
+        return Promise.reject("No access token set.");
+    }
+
+    // Gửi yêu cầu đến API để hiển thị phòng
+    return request({
+        url: `${API_BASE_URL}/room/${id}/enable`, // Đảm bảo endpoint đúng cho hành động hiển thị
+        method: 'POST', // Phương thức POST hoặc PUT tùy thuộc vào API
+    })}
+
+    // Xoá phòng admin
+    export const deleteRoomOfAdmin = (id) => {
+        if(!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("No access token set.");
+        }
+    
+        return request({
+            url: API_BASE_URL +"/room/"+ id + "/delete",
+            method: 'DELETE'
+        });
+    };
+
+    // xoá user
+    export const deleteUser  = (id) => {
+        if(!localStorage.getItem(ACCESS_TOKEN)) {
+            return Promise.reject("No access token set.");
+        }
+    
+        return request({
+            url: API_BASE_URL +"/auth/"+ id + "/deleteUser",
+            method: 'DELETE'
+        });
+    };
 
 export function deleteMaintenance(id) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {

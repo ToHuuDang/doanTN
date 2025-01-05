@@ -194,6 +194,9 @@ function EditRoom(props) {
                                             <select className="form-select" id="locationId" name="locationId" value={roomData.locationId} onChange={handleInputChange}>
                                                 <option value={0}>Chọn...</option>
                                                 <option value={1}>Hà Nội</option>
+                                                <option value={2}>Đà Nẵng</option>
+                                                <option value={3}>TP Hồ Chí Minh</option>
+                                                <option value={4}>Cần Thơ</option>
                                             </select>
                                         </div>
                                         <div className="mb-3 col-md-6">

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ElectricAndWaterRepository extends JpaRepository<ElectricAndWater, Long>{
     List<ElectricAndWater> findByRoomId(Long roomId);
+    void deleteByRoomId(Long roomId);
 }

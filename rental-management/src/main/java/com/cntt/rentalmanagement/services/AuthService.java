@@ -29,4 +29,7 @@ public interface AuthService {
     MessageResponse lockAccount(Long id);
 
     MessageResponse uploadProfile(MultipartFile file, String zalo, String facebook, String address);
+
+    // Xoá user
+    MessageResponse deleteUser(Long id);
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SidebarNav from './SidebarNav';
 import Nav from './Nav';
-import { disableRoom, getAllRoomOfRentaler } from '../../services/fetch/ApiUtils';
+import { disableRoom,enableRoom, getAllRoomOfRentaler } from '../../services/fetch/ApiUtils';
 import Pagination from './Pagnation';
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -64,6 +64,16 @@ function RoomManagement(props) {
         )
     };
 
+    const handleEnableRoom = (roomId) => {
+        enableRoom(roomId).then(response => {
+            toast.success("Phòng đã được hiển thị.");
+            fetchData(); // Lấy lại dữ liệu sau khi hiển thị phòng
+        }).catch(error => {
+            toast.error((error && error.message) || 'Oops! Có điều gì đó xảy ra. Vui lòng thử lại!');
+        });
+    };
+    
+
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -122,7 +132,9 @@ function RoomManagement(props) {
                                             <th className="sorting" tabindex="0" aria-controls="datatables-buttons" rowspan="1" colspan="1" style={{ width: "134px" }} >Chế độ</th></tr>
                                     </thead>
                                     <tbody>
-                                        {tableData.map((item) => (
+                                        {tableData
+                                            // .filter((item) => item.isRemove !== true) //Lọc danh sách các phòng đã bị Admin gỡ
+                                            .map((item) => (
                                             <tr className="odd">
                                                 <td className="dtr-control sorting_1" tabindex="0">{item.title}</td>
                                                 <td>{item.address}</td>
@@ -135,30 +147,44 @@ function RoomManagement(props) {
                                                 <td style={{ color: "green" }}>{item.isApprove === false ? "Chưa duyệt" : "Đã duyệt"}</td>
 
                                                 <td>
-                                                    {
-                                                        item.isRemove === true ?
-                                                            (
-                                                                <>
-                                                                    <span style={{ color: "red" }} data-toggle="tooltip" data-placement="bottom" title="Chi tiết thông tin gỡ ở email của bạn.">Admin gỡ tin</span>
-                                                                </>
-                                                            )
-                                                            :
-                                                            (
-                                                                <>
-                                                                    <a href="#" onClick={() => handleEditRoom(item.id)} data-toggle="tooltip" data-placement="bottom" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                                                                    &nbsp;&nbsp;
+                                                    {item.isRemove === true ? (
+                                                        <>
+                                                            <span style={{ color: "red" }} data-toggle="tooltip" data-placement="bottom" title="Chi tiết thông tin gỡ ở email của bạn.">Admin gỡ tin</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <a href="#" onClick={() => handleEditRoom(item.id)} data-toggle="tooltip" data-placement="bottom" title="Sửa">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-edit-2 align-middle">
+                                                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                                                </svg>
+                                                            </a>
+                                                            &nbsp;&nbsp;
 
-                                                                    &nbsp;
-                                                                    <a onClick={() => handleSetRoomId(item.id)} data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg" data-toggle="tooltip" data-placement="bottom" title="Xem chi tiết" >
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" /></svg> </a>
-                                                                    &nbsp;&nbsp;
-                                                                    <a href="#" onClick={() => handleDisableRoom(item.id)} data-toggle="tooltip" data-placement="bottom" title="Ẩn phòng"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                                                            <a onClick={() => handleSetRoomId(item.id)} data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg" data-toggle="tooltip" data-placement="bottom" title="Xem chi tiết" >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                                    <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                                                </svg>
+                                                            </a>
+                                                            &nbsp;&nbsp;
+                                                            <a href="#" onClick={() => handleDisableRoom(item.id)} data-toggle="tooltip" data-placement="bottom" title="Ẩn phòng">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-trash align-middle">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </>
+                                                    )}
 
-                                                                </>
-                                                            )
-                                                    }
-
+                                                    {item.isRemove === false && (
+                                                        <a href="#" onClick={() => handleEnableRoom(item.id)} data-toggle="tooltip" data-placement="bottom" title="Hiển phòng">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-eye align-middle">
+                                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                                                                <circle cx="12" cy="12" r="3"></circle>
+                                                            </svg>
+                                                        </a>
+                                                    )}
                                                 </td>
+
                                             </tr>
                                         ))}
                                     </tbody>

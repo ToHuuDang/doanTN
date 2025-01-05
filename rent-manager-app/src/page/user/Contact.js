@@ -82,7 +82,7 @@ const handleSubmit = (event) => {
                 <div className="contact-map box">
                   <div id="map" className="contact-map">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes+Square!5e0!3m2!1ses-419!2sve!4v1510329142834"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3645.9574217695854!2d108.2497157749019!3d15.974583984691247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31421088e365cc75%3A0x6648fdda14970b2c!2zNDcwIMSQxrDhu51uZyBUcuG6p24gxJDhuqFpIE5naMSpYSwgSG_DoCBI4bqjaSwgTmfFqSBIw6BuaCBTxqFuLCDEkMOgIE7hurVuZyA1NTAwMDAsIFZpZXRuYW0!5e1!3m2!1sen!2s!4v1735834192651!5m2!1sen!2s"
                       width="100%"
                       height="450"
                       frameBorder="0"
@@ -120,7 +120,7 @@ const handleSubmit = (event) => {
                               onChange={handleToEmailChange}
                               type="email"
                               className="form-control form-control-lg form-control-a"
-                              placeholder="Email Của Bạn"
+                              placeholder="Email Của Quản Trị Viên"
                               required
                             />
                           </div>
@@ -174,13 +174,13 @@ const handleSubmit = (event) => {
                       </div>
                       <div className="icon-box-content">
                         <p className="mb-1">
-                          <span className="color-a">Địa chỉ:</span> 1234 Đường ABC, Thành phố XYZ
+                          <span className="color-a">Địa chỉ:</span> 470 Ngũ Hành Sơn, thành phố Đà Nẵng
                         </p>
                         <p className="mb-1">
-                          <span className="color-a">Điện thoại:</span> +1 234 5678
+                          <span className="color-a">Điện thoại:</span> +84 394184228
                         </p>
                         <p className="mb-1">
-                          <span className="color-a">Email:</span> info@example.com
+                          <span className="color-a">Email:</span> tohuudang10@gmail.com
                         </p>
                       </div>
                     </div>

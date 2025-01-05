@@ -117,7 +117,19 @@ function MaintenceManagement(props) {
                                                 <td>{item.room.address}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-outline-success">
-                                                        <a href={item.files === null ? "" : `http://localhost:8080/document/` + item.files.replace('photographer/files/', '')} target="_blank">Xem</a>
+                                                    <a
+                                                        href={
+                                                            item.files === null
+                                                            ? ""
+                                                            : item.files.startsWith("http")
+                                                            ? item.files // Nếu đã là URL đầy đủ, giữ nguyên
+                                                            : `http://localhost:8080/document/` +
+                                                                item.files.replace("photographer/files/", "")
+                                                        }
+                                                        target="_blank"
+                                                        >
+                                                        Xem
+                                                        </a>
                                                     </button>
                                                 </td>
                                                 <td>{item.price && item.price.toLocaleString('vi-VN', {

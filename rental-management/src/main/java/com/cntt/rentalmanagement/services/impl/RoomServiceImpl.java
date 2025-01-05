@@ -29,9 +29,14 @@ import com.cntt.rentalmanagement.domain.payload.response.MessageResponse;
 import com.cntt.rentalmanagement.domain.payload.response.RoomResponse;
 import com.cntt.rentalmanagement.exception.BadRequestException;
 import com.cntt.rentalmanagement.repository.AssetRepository;
+import com.cntt.rentalmanagement.repository.BlogStoreRepository;
 import com.cntt.rentalmanagement.repository.CategoryRepository;
 import com.cntt.rentalmanagement.repository.CommentRepository;
+import com.cntt.rentalmanagement.repository.ContractRepository;
+import com.cntt.rentalmanagement.repository.ElectricAndWaterRepository;
 import com.cntt.rentalmanagement.repository.LocationRepository;
+import com.cntt.rentalmanagement.repository.MaintenanceRepository;
+import com.cntt.rentalmanagement.repository.RequestRepository;
 import com.cntt.rentalmanagement.repository.RoomMediaRepository;
 import com.cntt.rentalmanagement.repository.RoomRepository;
 import com.cntt.rentalmanagement.repository.UserRepository;
@@ -39,6 +44,7 @@ import com.cntt.rentalmanagement.services.BaseService;
 import com.cntt.rentalmanagement.services.FileStorageService;
 import com.cntt.rentalmanagement.services.RoomService;
 import com.cntt.rentalmanagement.utils.MapperUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -54,6 +60,12 @@ public class RoomServiceImpl extends BaseService implements RoomService {
     private final AssetRepository assetRepository;
     private final CommentRepository commentRepository;
     private final MapperUtils mapperUtils;
+
+    private final BlogStoreRepository blogStoreRepository;
+    private final ContractRepository contractRepository;
+    private final ElectricAndWaterRepository electricAndWaterRepository;
+    private final MaintenanceRepository maintenanceRepository;
+    private final RequestRepository requestRepository;
 
     @Override
     public MessageResponse addNewRoom(RoomRequest roomRequest) {
@@ -116,12 +128,20 @@ public class RoomServiceImpl extends BaseService implements RoomService {
                 new BadRequestException("Phòng trọ này không tồn tại.")), Room.class);
     }
 
-    @Override
+    @Override // An phong
     public MessageResponse disableRoom(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new BadRequestException("Thông tin phòng không tồn tại."));
         room.setIsLocked(LockedStatus.DISABLE);
         roomRepository.save(room);
         return MessageResponse.builder().message("Bài đăng của phòng đã được ẩn đi.").build();
+    }
+
+    @Override // Hiem thi phong
+    public MessageResponse enableRoom(Long id) { // UPDATED: Thêm triển khai phương thức enableRoom
+        Room room = roomRepository.findById(id).orElseThrow(() -> new BadRequestException("Thông tin phòng không tồn tại."));
+        room.setIsLocked(LockedStatus.ENABLE); // Đặt trạng thái thành ENABLE
+        roomRepository.save(room); // Lưu thay đổi vào database
+        return MessageResponse.builder().message("Phòng đã được hiển thị lại.").build();
     }
 
     @Override
@@ -259,7 +279,7 @@ public class RoomServiceImpl extends BaseService implements RoomService {
     }
 
     @Override
-    public MessageResponse removeRoom(Long id) {
+    public MessageResponse removeRoom(Long id) { // gỡ phòng phía admin
         Room room = roomRepository.findById(id).orElseThrow(() -> new BadRequestException("Phòng không còn tồn tại"));
         if(Boolean.TRUE.equals(room.getIsRemove())){
             throw new BadRequestException("Bài đăng đã bị gỡ");
@@ -268,6 +288,29 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         roomRepository.save(room);
         return MessageResponse.builder().message("Bài đăng đã bị gỡ thành công").build();
     }
+
+    @Transactional
+   @Override
+    public MessageResponse deleteRoom(Long id) { 
+    // Tìm phòng theo ID, nếu không tìm thấy thì ném ra lỗi
+    Room room = roomRepository.findById(id).orElseThrow(() -> new BadRequestException("Phòng không tồn tại"));
+     // Xóa các bản ghi liên quan trong các bảng con
+     assetRepository.deleteAllByRoom(room);
+     blogStoreRepository.deleteByRoomId(id); // Xóa bài đăng liên quan đến phòng
+     commentRepository.deleteByRooms_Id(id);
+     contractRepository.deleteByRoomId(id);
+     electricAndWaterRepository.deleteByRoomId(id);
+     maintenanceRepository.deleteByRoomId(id);
+    //  rateRepository.deleteByRoomId(id);
+     requestRepository.deleteByRoomId(id);
+     roomMediaRepository.deleteAllByRoom(room);
+    // Xóa phòng khỏi cơ sở dữ liệu
+    roomRepository.delete(room);
+    // Trả về thông báo thành công
+    return MessageResponse.builder()
+            .message("Bài đăng đã bị xóa thành công")
+            .build();
+}
 
 	@Override
 	public String addComment(Long id, CommentDTO commentDTO) {

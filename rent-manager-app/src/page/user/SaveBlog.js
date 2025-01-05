@@ -69,73 +69,85 @@ function SaveBlog(props) {
                                 <h6 className="card-subtitle text-muted"> Quản lý các bài đăng đã lưu.</h6>
                             </div>
                             <div className="card-body">
-                                {tableData.map(item => (
-
-                                    <div className="col-md-4">
-                                        <div className="card-box-a card-shadow">
-                                            <div className="img-box-a">
-                                                {item?.room.roomMedia[0] ?
-                                                    <img src={item?.room.roomMedia[0].files} alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
-                                                    :
-                                                    <img src="assets/img/property-1.jpg" alt="" className="img-a img-fluid" style={{ width: "350px", height: "450px" }} />
-                                                }
-                                            </div>
-                                            <div className="card-overlay">
-                                                <div className="card-overlay-a-content">
-                                                    <div className="card-header-a">
-                                                        <h2 className="card-title-a">
-                                                            <Link to={`/rental-home/${item?.room.id}`}>
-                                                                <b>{item?.room.title}</b>
-                                                                <br /> <small>{item?.room.description}</small>
-                                                            </Link>
-
-                                                        </h2>
-                                                    </div>
-                                                    <div className="card-body-a">
-                                                        <div className="price-box d-flex">
-                                                            <span className="price-a">
-                                                                {item?.room.status === "ROOM_RENT" && `Cho thuê |  ${item?.room.price.toLocaleString('vi-VN', {
-                                                                    style: 'currency',
-                                                                    currency: 'VND',
-                                                                })}`}
-                                                                {item?.room.status === "HIRED" && `Đã thuê | ${item?.room.price.toLocaleString('vi-VN', {
-                                                                    style: 'currency',
-                                                                    currency: 'VND',
-                                                                })}`}
-                                                                {item?.room.status === "CHECKED_OUT" && `Đã trả phòng | ${item?.room.price.toLocaleString('vi-VN', {
-                                                                    style: 'currency',
-                                                                    currency: 'VND',
-                                                                })}`}
-                                                            </span>
-                                                        </div>
-                                                        <Link to={`/rental-home/${item?.room.id}`}>Xem chi tiết
-                                                            <span className="bi bi-chevron-right"></span>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="card-footer-a">
-                                                        <ul className="card-info d-flex justify-content-around">
-                                                            <li>
-                                                                <h4 className="card-info-title">Vị trí</h4>
-                                                                <span>{item?.room.location.cityName}
-                                                                    <sup></sup>
-                                                                </span>
-                                                            </li>
-                                                            <li>
-                                                                <h4 className="card-info-title">Loại</h4>
-                                                                <span>{item?.room.category.name}</span>
-                                                            </li>
-                                                            <li>
-                                                                <h4 className="card-info-title">Người cho thuê</h4>
-                                                                <span>{item?.room.user.name}</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+    <div className="row">
+        {tableData.map(item => (
+            <div className="col-md-4" key={item.room.id}>
+                <div className="card-box-a card-shadow">
+                    <div className="img-box-a">
+                        {item?.room.roomMedia[0] ? (
+                            <img
+                                src={`http://localhost:8080/document/${item?.room.roomMedia[0].files}`}
+                                alt=""
+                                className="img-a img-fluid"
+                                style={{ width: "350px", height: "450px" }}
+                            />
+                        ) : (
+                            <img
+                                src="assets/img/property-1.jpg"
+                                alt=""
+                                className="img-a img-fluid"
+                                style={{ width: "350px", height: "450px" }}
+                            />
+                        )}
+                    </div>
+                    <div className="card-overlay">
+                        <div className="card-overlay-a-content">
+                            <div className="card-header-a">
+                                <h2 className="card-title-a">
+                                    <Link to={`/rental-home/${item?.room.id}`}>
+                                        <b>{item?.room.title}</b>
+                                        <br /> <small>{item?.room.description}</small>
+                                    </Link>
+                                </h2>
                             </div>
+                            <div className="card-body-a">
+                                <div className="price-box d-flex">
+                                    <span className="price-a">
+                                        {item?.room.status === "ROOM_RENT" &&
+                                            `Cho thuê | ${item?.room.price.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            })}`}
+                                        {item?.room.status === "HIRED" &&
+                                            `Đã thuê | ${item?.room.price.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            })}`}
+                                        {item?.room.status === "CHECKED_OUT" &&
+                                            `Đã trả phòng | ${item?.room.price.toLocaleString('vi-VN', {
+                                                style: 'currency',
+                                                currency: 'VND',
+                                            })}`}
+                                    </span>
+                                </div>
+                                <Link to={`/rental-home/${item?.room.id}`} style={{ color: "white" }}>Xem chi tiết
+                                    <span className="bi bi-chevron-right"></span>
+                                </Link>
+                            </div>
+                            <div className="card-footer-a">
+                                <ul className="card-info d-flex justify-content-around">
+                                    <li>
+                                        <h4 className="card-info-title">Vị trí</h4>
+                                        <span>{item?.room.location.cityName}</span>
+                                    </li>
+                                    <li>
+                                        <h4 className="card-info-title">Loại</h4>
+                                        <span>{item?.room.category.name}</span>
+                                    </li>
+                                    <li>
+                                        <h4 className="card-info-title">Người cho thuê</h4>
+                                        <span>{item?.room.user.name}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
+</div>
+
                             <Pagination
                                 itemsPerPage={itemsPerPage}
                                 totalItems={totalItems}

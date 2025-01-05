@@ -11,4 +11,7 @@ import java.util.Optional;
 
 public interface BlogStoreRepository extends JpaRepository<BlogStore, Long>,BlogStoreRepositoryCustom {
     Optional<BlogStore> findByRoomAndUser(Room room, User user);
+    void deleteByRoomId(Long roomId);
+    void deleteByUserId(Long userId);
 }
+

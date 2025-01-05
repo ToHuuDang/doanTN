@@ -126,19 +126,19 @@ function DashboardRentaler(props) {
                 datasets: [
                   {
                     ...prevUserData.datasets[0],
-                    label: "Tiền nước",
+                    label: "Tiền internet",
                     backgroundColor: "rgba(75,192,192,1)",
                     data: revenueData.content.map((data) => data.waterCost),
                   },
-                  {
-                    ...prevUserData.datasets[0],
-                    label: "Tiền điện",
-                    backgroundColor: "#ecf0f1",
-                    data: revenueData.content.map((data) => data.publicElectricCost),
-                  },
+                //   {
+                //     ...prevUserData.datasets[0],
+                //     label: "Tiền điện",
+                //     backgroundColor: "#ecf0f1",
+                //     data: revenueData.content.map((data) => data.publicElectricCost),
+                //   },
                   {
                     ...prevUserData.datasets[2],
-                    label: "Tiền internet",
+                    label: "Tiền nước",
                     backgroundColor: "#50AF95",
                     data: revenueData.content.map((data) => data.internetCost),
                   }
@@ -188,7 +188,7 @@ console.log("subData", subData);
             <nav id="sidebar" className="sidebar js-sidebar">
                 <div className="sidebar-content js-simplebar">
                     <a className="sidebar-brand" href="index.html">
-                        <span className="align-middle">RENTALER PRO</span>
+                        <span className="align-middle">Quản lí phòng</span>
                     </a>
                     <SidebarNav />
                 </div>
@@ -270,7 +270,7 @@ console.log("subData", subData);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-3">
+                            {/* <div class="col-sm-6 col-xl-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
@@ -295,7 +295,7 @@ console.log("subData", subData);
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6 d-flex">

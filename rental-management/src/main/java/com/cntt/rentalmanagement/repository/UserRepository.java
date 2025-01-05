@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> , UserReposito
 
     long count();
 
+    void deleteRoleOfAccount(Long id);
+
 }
